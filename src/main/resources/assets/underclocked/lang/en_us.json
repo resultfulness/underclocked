@@ -1,0 +1,8 @@
+{
+  "item.underclocked.underclock_device": "Underclock Device",
+  "item.underclocked.underclock_device.info_tooltip": "Inhibits instant mining",
+  "tooltip.status": "Status",
+  "tooltip.enabled": "ENABLED",
+  "tooltip.disabled": "DISABLED",
+  "tooltip.holdForMoreInfo": "Hold SHIFT for more info"
+}
