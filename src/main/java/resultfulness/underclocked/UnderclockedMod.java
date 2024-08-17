@@ -13,6 +13,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
+import resultfulness.underclocked.component.ModComponents;
 import resultfulness.underclocked.item.ModCreativeTabs;
 import resultfulness.underclocked.item.ModItems;
 
@@ -22,7 +23,7 @@ public class UnderclockedMod {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "underclocked";
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
@@ -32,6 +33,7 @@ public class UnderclockedMod {
 
         ModItems.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
+        ModComponents.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (UnderclockedMod) to respond directly to events.

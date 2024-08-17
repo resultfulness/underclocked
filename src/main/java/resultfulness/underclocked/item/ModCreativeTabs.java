@@ -10,6 +10,7 @@ import resultfulness.underclocked.UnderclockedMod;
 
 public class ModCreativeTabs {
     public static void register(IEventBus eventBus) {
+        UnderclockedMod.LOGGER.info("Registering {} creative tab info", UnderclockedMod.MODID);
         eventBus.addListener(ModCreativeTabs::addCreative);
     }
 

@@ -1,6 +1,7 @@
 package resultfulness.underclocked.item;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -12,23 +13,26 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import resultfulness.underclocked.component.ModComponents;
 import resultfulness.underclocked.helper.KeyboardHelper;
 
 import java.util.List;
 
 public class UnderclockDeviceItem extends Item {
-    private boolean isEnabled = false;
-
     public UnderclockDeviceItem() {
-        super(new Item.Properties().stacksTo(1));
+        super(new Item.Properties()
+                .stacksTo(1)
+                .component(ModComponents.ENABLED_COMPONENT, false)
+        );
     }
 
     private void toggleEnabled(ItemStack stack) {
-        this.isEnabled = !this.isEnabled;
+        boolean isEnabled = stack.getOrDefault(ModComponents.ENABLED_COMPONENT, false);
+        stack.set(ModComponents.ENABLED_COMPONENT, !isEnabled);
     }
 
     private boolean isEnabled(ItemStack stack) {
-        return this.isEnabled;
+        return stack.getOrDefault(ModComponents.ENABLED_COMPONENT, false);
     }
 
     @Override
@@ -59,7 +63,14 @@ public class UnderclockDeviceItem extends Item {
         ItemStack stack = player.getItemInHand(usedHand);
 
         if (!level.isClientSide) {
-            level.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.1F, 2F);
+            level.playSound(
+                null,
+                player.blockPosition(),
+                SoundEvents.EXPERIENCE_ORB_PICKUP,
+                SoundSource.PLAYERS,
+                0.2F,
+                !this.isEnabled(stack) ? 1F : 0.1F
+            );
             this.toggleEnabled(stack);
         }
 

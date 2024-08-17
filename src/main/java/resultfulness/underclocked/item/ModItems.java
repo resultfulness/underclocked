@@ -14,6 +14,7 @@ public class ModItems {
             ITEMS.register("underclock_device", UnderclockDeviceItem::new);
 
     public static void register(IEventBus eventBus) {
+        UnderclockedMod.LOGGER.info("Registering {} items", UnderclockedMod.MODID);
         ITEMS.register(eventBus);
     }
 }
