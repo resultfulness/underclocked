@@ -1,7 +1,9 @@
 package resultfulness.underclocked.item;
 
+import java.util.List;
+
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,30 +15,24 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import resultfulness.underclocked.component.ModComponents;
 import resultfulness.underclocked.helper.KeyboardHelper;
-
-import java.util.List;
+import resultfulness.underclocked.helper.TagHelper;
 
 public class UnderclockDeviceItem extends Item {
     public UnderclockDeviceItem() {
-        super(new Item.Properties()
-                .stacksTo(1)
-                .component(ModComponents.ENABLED_COMPONENT, false)
-        );
+        super(new Item.Properties().stacksTo(1));
     }
 
     private void toggleEnabled(ItemStack stack) {
-        boolean isEnabled = stack.getOrDefault(ModComponents.ENABLED_COMPONENT, false);
-        stack.set(ModComponents.ENABLED_COMPONENT, !isEnabled);
+        TagHelper.setBool(TagHelper.ENABLED_TAG, !TagHelper.getBool(TagHelper.ENABLED_TAG, stack), stack);
     }
 
     private boolean isEnabled(ItemStack stack) {
-        return stack.getOrDefault(ModComponents.ENABLED_COMPONENT, false);
+        return TagHelper.getBool(TagHelper.ENABLED_TAG, stack);
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, Level context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         tooltipComponents.add(Component.literal(""));
         if (KeyboardHelper.isHoldingShift()) {
             tooltipComponents.add(Component.translatable("item.underclocked.underclock_device.info_tooltip").withStyle(ChatFormatting.GRAY));
@@ -74,6 +70,6 @@ public class UnderclockDeviceItem extends Item {
             this.toggleEnabled(stack);
         }
 
-        return new InteractionResultHolder<>(InteractionResult.SUCCESS_NO_ITEM_USED, stack);
+        return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
     }
 }

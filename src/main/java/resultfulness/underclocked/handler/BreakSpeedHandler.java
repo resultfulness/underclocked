@@ -1,24 +1,33 @@
 package resultfulness.underclocked.handler;
 
+
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import resultfulness.underclocked.UnderclockedMod;
-import resultfulness.underclocked.component.ModComponents;
+import resultfulness.underclocked.helper.TagHelper;
 import resultfulness.underclocked.item.ModItems;
 
-@EventBusSubscriber(modid = UnderclockedMod.MODID)
 public class BreakSpeedHandler {
+    private static final Logger log = LoggerFactory.getLogger(BreakSpeedHandler.class);
+
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player p = event.getEntity();
         Inventory i = p.getInventory();
         ItemStack enabledUnderclockDeviceStack = new ItemStack(ModItems.UNDERCLOCK_DEVICE_ITEM.get());
-        enabledUnderclockDeviceStack.set(ModComponents.ENABLED_COMPONENT, true);
+        TagHelper.setBool(TagHelper.ENABLED_TAG, true, enabledUnderclockDeviceStack);
         if (!i.contains(enabledUnderclockDeviceStack)) {
             return;
         }
