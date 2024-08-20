@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "XAX",
+        "ABA",
+        "XAX"
+    ],
+    "key": {
+        "X": {
+            "item": "minecraft:iron_ingot"
+        },
+        "A": {
+            "item": "minecraft:redstone"
+        },
+        "B": {
+            "item": "minecraft:sugar"
+        }
+    },
+    "result": {
+        "item": "underclocked:underclock_device",
+        "count": 1
+    }
+}
