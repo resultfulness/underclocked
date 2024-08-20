@@ -1,9 +1,6 @@
 package resultfulness.underclocked.item;
 
-import java.util.List;
-
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -17,10 +14,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import resultfulness.underclocked.helper.KeyboardHelper;
 import resultfulness.underclocked.helper.TagHelper;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-public class UnderclockDeviceItem extends Item {
+import java.util.List;
+
+public class UnderclockDeviceItem extends Item implements ICurioItem {
     public UnderclockDeviceItem() {
-        super(new Item.Properties().stacksTo(1));
+        super(new Item.Properties().stacksTo(1).defaultDurability(0));
     }
 
     private void toggleEnabled(ItemStack stack) {
@@ -33,7 +33,6 @@ public class UnderclockDeviceItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal(""));
         if (KeyboardHelper.isHoldingShift()) {
             tooltipComponents.add(Component.translatable("item.underclocked.underclock_device.info_tooltip").withStyle(ChatFormatting.GRAY));
             if (this.isEnabled(stack)) {
@@ -52,6 +51,7 @@ public class UnderclockDeviceItem extends Item {
         } else {
             tooltipComponents.add(Component.translatable("tooltip.holdForMoreInfo").withStyle(ChatFormatting.GRAY));
         }
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
     @Override
